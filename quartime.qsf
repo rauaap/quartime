@@ -30,7 +30,111 @@ set_global_assignment -name EDA_TEST_BENCH_FILE test/quartime.vht -section_id qu
 set_global_assignment -name NUM_PARALLEL_PROCESSORS 2
 set_global_assignment -name SOURCE_FILE src/quartime.vhd
 set_global_assignment -name QII_AUTO_PACKED_REGISTERS MINIMIZE_AREA
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+
+set_global_assignment -name SOURCE_FILE /home/aapo/repos/quartime/src/quartime.vhd
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clock
+set_location_assignment PIN_P11 -to clock
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[0][0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[0][1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[0][2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[0][3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[0][4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[0][5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[0][6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[1][0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[1][1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[1][2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[1][3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[1][4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[1][5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[1][6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[2][0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[2][1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[2][2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[2][3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[2][4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[2][5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[2][6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[3][0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[3][1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[3][2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[3][3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[3][4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[3][5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[3][6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[4][0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[4][1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[4][2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[4][3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[4][4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[4][5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[4][6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[5][0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[5][1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[5][2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[5][3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[5][4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[5][5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to display_outputs[5][6]
+set_location_assignment PIN_C14 -to display_outputs[0][0]
+set_location_assignment PIN_E15 -to display_outputs[0][1]
+set_location_assignment PIN_C15 -to display_outputs[0][2]
+set_location_assignment PIN_C16 -to display_outputs[0][3]
+set_location_assignment PIN_D17 -to display_outputs[0][5]
+set_location_assignment PIN_C17 -to display_outputs[0][6]
+set_location_assignment PIN_E16 -to display_outputs[0][4]
+set_location_assignment PIN_C18 -to display_outputs[1][0]
+set_location_assignment PIN_D18 -to display_outputs[1][1]
+set_location_assignment PIN_E18 -to display_outputs[1][2]
+set_location_assignment PIN_B16 -to display_outputs[1][3]
+set_location_assignment PIN_A17 -to display_outputs[1][4]
+set_location_assignment PIN_A18 -to display_outputs[1][5]
+set_location_assignment PIN_B17 -to display_outputs[1][6]
+set_location_assignment PIN_B20 -to display_outputs[2][0]
+set_location_assignment PIN_A20 -to display_outputs[2][1]
+set_location_assignment PIN_B19 -to display_outputs[2][2]
+set_location_assignment PIN_A21 -to display_outputs[2][3]
+set_location_assignment PIN_B21 -to display_outputs[2][4]
+set_location_assignment PIN_C22 -to display_outputs[2][5]
+set_location_assignment PIN_B22 -to display_outputs[2][6]
+set_location_assignment PIN_F21 -to display_outputs[3][0]
+set_location_assignment PIN_E22 -to display_outputs[3][1]
+set_location_assignment PIN_E21 -to display_outputs[3][2]
+set_location_assignment PIN_C19 -to display_outputs[3][3]
+set_location_assignment PIN_C20 -to display_outputs[3][4]
+set_location_assignment PIN_D19 -to display_outputs[3][5]
+set_location_assignment PIN_E17 -to display_outputs[3][6]
+set_location_assignment PIN_F18 -to display_outputs[4][0]
+set_location_assignment PIN_E20 -to display_outputs[4][1]
+set_location_assignment PIN_E19 -to display_outputs[4][2]
+set_location_assignment PIN_J18 -to display_outputs[4][3]
+set_location_assignment PIN_H19 -to display_outputs[4][4]
+set_location_assignment PIN_F19 -to display_outputs[4][5]
+set_location_assignment PIN_F20 -to display_outputs[4][6]
+set_location_assignment PIN_J20 -to display_outputs[5][0]
+set_location_assignment PIN_K20 -to display_outputs[5][1]
+set_location_assignment PIN_L18 -to display_outputs[5][2]
+set_location_assignment PIN_N18 -to display_outputs[5][3]
+set_location_assignment PIN_M20 -to display_outputs[5][4]
+set_location_assignment PIN_N19 -to display_outputs[5][5]
+set_location_assignment PIN_N20 -to display_outputs[5][6]
+
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to dot_a
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to dot_b
+set_location_assignment PIN_A19 -to dot_a
+set_location_assignment PIN_F17 -to dot_b
+set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to reset
+set_location_assignment PIN_B8 -to reset
+set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to stop
+set_location_assignment PIN_A7 -to stop
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
