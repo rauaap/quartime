@@ -1,3 +1,61 @@
+------------------------ CLOCK DIVIDER ----------------------------------------
+Library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity clock_divider is
+    port (
+        clock: in std_logic;
+        output: out std_logic
+    );
+end clock_divider;
+
+architecture rtl of clock_divider is
+    constant frequency: unsigned(25 downto 0) := to_unsigned(50000000, 26);
+begin
+    process (clock) is
+        variable cycles: unsigned(25 downto 0) := to_unsigned(0, 26);
+        variable state: std_logic := '0';
+    begin
+        if rising_edge(clock) then
+            cycles := cycles + 1;
+            if cycles = frequency then
+                state := '1';
+                cycles := to_unsigned(0, 26);
+            else
+                state := '0';
+            end if;
+        end if;
+
+        output <= state;
+    end process;
+end architecture rtl;
+
+------------------------ TIME SET SELECT --------------------------------------
+Library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity time_set_select is
+    port (
+        input: in std_logic;
+        output: out unsigned(1 downto 0)
+    );
+end time_set_select;
+
+architecture rtl of time_set_select is
+begin
+    process (input) is
+        variable state: unsigned(0 to 1);
+    begin
+        if falling_edge(input) then
+            state := state + 1;
+        end if;
+
+        output <= state;
+    end process;
+end architecture rtl;
+
 ------------------------ SECOND COUNTER ---------------------------------------
 Library ieee;
 use ieee.std_logic_1164.all;
@@ -5,47 +63,38 @@ use ieee.numeric_std.all;
 
 entity second_counter is
     port (
-        input: in std_logic;
-        reset: in std_logic;
-        stop: in std_logic;
+        clock: in std_logic;
+        set_select: in unsigned(1 downto 0);
         output: out unsigned(16 downto 0)
     );
 end second_counter;
 
 architecture rtl of second_counter is
-    constant counter_limit: unsigned(25 downto 0) := to_unsigned(50000000, 26);
+    constant limit: unsigned(16 downto 0) := to_unsigned(60 * 60 * 24, 17);
+    signal increase: unsigned(11 downto 0);
 begin
-    process(input, reset, stop) is
-        variable counter: unsigned(25 downto 0) := to_unsigned(0, 26);
+    process(clock, increase) is
         variable seconds: unsigned(16 downto 0) := to_unsigned(0, 17);
-        variable stopped: boolean;
+        variable overflow: unsigned(16 downto 0);
     begin
+        if rising_edge(clock) then
+            seconds := seconds + increase;
 
-        if rising_edge(input) and not stopped then
-           counter := counter + 1;
-
-            if counter = counter_limit then
-                counter := to_unsigned(0, 26);
-                seconds := seconds + 1;
-
-                if seconds = to_unsigned(60 * 60 * 24, 17) then
-                    seconds := to_unsigned(0, 17);
-                end if;
+            if seconds >= limit then
+                overflow := seconds - limit;
+                seconds := overflow;
             end if;
-
-        end if;
-
-        if reset = '0' then
-            counter := to_unsigned(0, 26);
-            seconds := to_unsigned(0, 17);
-        end if;
-
-        if falling_edge(stop) then
-            stopped := not stopped;
         end if;
 
         output <= seconds;
     end process;
+
+    with set_select select increase <=
+        to_unsigned(1, 12) when to_unsigned(0, 2),
+        to_unsigned(1, 12) when to_unsigned(1, 2),
+        to_unsigned(60, 12) when to_unsigned(2, 2),
+        to_unsigned(3600, 12) when to_unsigned(3, 2);
+
 end architecture rtl;
 
 ------------------------ GET REMAINDER ----------------------------------------
@@ -241,11 +290,16 @@ use ieee.std_logic_1164.all;
 
 entity quartime is
     port(
-        dot_a: out std_logic := '0';
-        dot_b: out std_logic := '0';
+        button: in std_logic;
+        time_set_select_in: in std_logic;
         clock: in std_logic;
-        reset: in std_logic;
-        stop: in std_logic;
+
+        dot_a: out std_logic;
+        dot_b: out std_logic;
+        dot_c: out std_logic;
+        dot_d: out std_logic;
+        dot_e: out std_logic;
+        dot_f: out std_logic;
         display_outputs: out t_display_outputs
     );
 end entity quartime;
@@ -254,16 +308,44 @@ architecture rtl of quartime is
     type t_tens_splitter_inputs is array (0 to 2) of unsigned(6 downto 0);
     type t_seven_seg_inputs is array (0 to 5) of unsigned(3 downto 0);
 
+    signal clock_out: std_logic;
+    signal second_counter_out: unsigned(16 downto 0);
+    signal time_set_select_out: unsigned(1 downto 0);
+
+    signal sel: std_logic;
+    signal not_sel: std_logic;
+    signal second_counter_in: std_logic;
+
     signal tens_splitter_inputs: t_tens_splitter_inputs;
     signal seven_seg_inputs: t_seven_seg_inputs;
-    signal second_counter_out: unsigned(16 downto 0);
 begin
+    clock_divider: entity WORK.clock_divider(rtl)
+    port map (
+        clock => clock,
+        output => clock_out
+    );
+
+    time_set_select: entity WORK.time_set_select(rtl)
+    port map (
+        input => time_set_select_in,
+        output => time_set_select_out
+    );
+
+    sel <= '1' when time_set_select_out > 0 else '0';
+    not_sel <= not sel;
+    second_counter_in <= (clock_out and not_sel) or (not button and sel);
+
+    dot_a <= '0' when time_set_select_out = 1 else '1';
+    dot_b <= '0' when time_set_select_out = 1 else '1';
+    dot_c <= '0' when time_set_select_out = 2 or time_set_select_out = 0 else '1';
+    dot_d <= '0' when time_set_select_out = 2 else '1';
+    dot_e <= '0' when time_set_select_out = 3 or time_set_select_out = 0 else '1';
+    dot_f <= '0' when time_set_select_out = 3 else '1';
 
     second_counter: entity WORK.second_counter(rtl)
     port map (
-        input => clock,
-        reset => reset,
-        stop => stop,
+        clock => second_counter_in,
+        set_select => time_set_select_out,
         output => second_counter_out
     );
 
