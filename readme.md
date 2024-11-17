@@ -9,10 +9,10 @@ Digital clock to be implemented on an Intel MAX10 FPGA.
 ```mermaid
 graph TB
     input((INPUT))
-    d1["IN * 139811\n >> 23"]
-    d2["IN * 139811\n >> 23"]
-    sub1["IN1 - \n IN2 * 60"]
-    sub2["IN1 - \n IN2 * 60"]
+    d1["IN * 139811 >> 23"]
+    d2["IN * 139811 >> 23"]
+    sub1["IN1 - IN2 * 60"]
+    sub2["IN1 - IN2 * 60"]
     out1((OUT1))
     out2((OUT2))
     out3((OUT3))
@@ -33,8 +33,8 @@ graph TB
 ```mermaid
 graph TB
     input((INPUT))
-    d1["IN * 103\n >> 10"]
-    sub1["IN1 - \n IN2 * 10"]
+    d1["IN * 103 >> 10"]
+    sub1["IN1 - IN2 * 10"]
     out1((OUT1))
     out2((OUT2))
 
@@ -54,12 +54,12 @@ graph TB
     m2a[M2_a]
     m2b[M2_b]
     m2c[M2_c]
-    7seg1{{"7seg\ndecoder"}}
-    7seg2{{"7seg\ndecoder"}}
-    7seg3{{"7seg\ndecoder"}}
-    7seg4{{"7seg\ndecoder"}}
-    7seg5{{"7seg\ndecoder"}}
-    7seg6{{"7seg\ndecoder"}}
+    7seg1{{"7seg decoder"}}
+    7seg2{{"7seg decoder"}}
+    7seg3{{"7seg decoder"}}
+    7seg4{{"7seg decoder"}}
+    7seg5{{"7seg decoder"}}
+    7seg6{{"7seg decoder"}}
 
     input --> m1
     m1 ---->|OUT1| m2a
